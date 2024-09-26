@@ -1,14 +1,13 @@
-class Coordinate {
-  constructor(public x: number, public y: number) {}
-}
+import { Coordinate } from "./coordinate";
 
 class Move {
-  constructor(public square1: Coordinate, public square2: Coordinate) {}
+  private square1: Coordinate;
+  private square2: Coordinate;
+
+  constructor(square1: Coordinate, square2: Coordinate) {
+    this.square1 = square1;
+    this.square2 = square2;
+  }
 }
 
-// Example usage:
-const start = new Coordinate(0, 0);
-const end = new Coordinate(1, 1);
-const move = new Move(start, end);
-
-console.log(move);
+export { Move };

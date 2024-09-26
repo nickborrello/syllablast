@@ -1,30 +1,75 @@
-class Board {
-  private syllables: string[];
-  private finalSyllables: string[];
+import { parse } from "path";
+import { Coordinate } from "./coordinate";
 
-  constructor(syllables: string[], finalSyllables: string[]) {
+class Board {
+  private syllables: string[][];
+  public finalSyllables: string[][];
+
+  constructor(syllables: string[][], finalSyllables: string[]) {
     this.syllables = syllables;
-    this.finalSyllables = finalSyllables;
+    this.finalSyllables = this.parseWords(finalSyllables);
   }
 
   hasWon(): boolean {
-    // Implement your logic to determine if the game is won
-    return this.syllables.join("") === this.finalSyllables.join("");
+    return this.score() == this.finalSyllables.length;
   }
 
   score(): number {
-    // Implement your logic to calculate the score
-    return this.syllables.length;
+    let score = 0;
+    for (let i = 0; i < this.syllables.length; i++) {
+      for (let j = 0; j < this.syllables[i].length; j++) {
+        if (this.isValid(new Coordinate(i, j))) {
+          score++;
+        } else {
+          continue;
+        }
+      }
+    }
+    return score;
   }
 
+  // Validates whether the row of the given coordinate forms a complete word from the solution
   isValid(coordinate: Coordinate): boolean {
-    // Implement your logic to validate a coordinate
+    // Retrieve the row of syllables where the coordinate is located
+    const rowSyllables = this.syllables[coordinate.row].map(
+      (syllable) => syllable
+    );
 
-    return coordinate.x >= 0 && coordinate.y >= 0;
+    console.log(rowSyllables);
+
+    // for each syllable in the row
+    let currentRow = 0;
+    for (let i = 0; i <= coordinate.column; i++) {
+      // first syllable
+      if (i == 0) {
+        // check for the first syllable in the finalSyllables
+        for (let j = 0; j < this.finalSyllables.length; j++) {
+          // if the syllable is found, set the currentRow to the index of the syllable
+          if (rowSyllables[i] == this.finalSyllables[j][0]) {
+            currentRow = j;
+            break;
+          } else {
+            continue;
+          }
+        }
+      } else {
+        // check for the next syllables in the finalSyllables
+        if (rowSyllables[i] == this.finalSyllables[currentRow][i]) {
+          continue;
+        } else {
+          console.log(
+            rowSyllables[i] + " =/= " + this.finalSyllables[currentRow][i]
+          );
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  parseWords(words: string[]): string[][] {
+    return words.map((word: string) => word.split(","));
   }
 }
 
-interface Coordinate {
-  x: number;
-  y: number;
-}
+export { Board };
