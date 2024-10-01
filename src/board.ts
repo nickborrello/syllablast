@@ -28,7 +28,7 @@ class Board {
   }
 
   swapSyllables(coordinate1: Coordinate, coordinate2: Coordinate) {
-    let temp = this.syllables[coordinate1.row][coordinate1.column];
+    const temp = this.syllables[coordinate1.row][coordinate1.column];
     this.syllables[coordinate1.row][coordinate1.column] =
       this.syllables[coordinate2.row][coordinate2.column];
     this.syllables[coordinate2.row][coordinate2.column] = temp;
