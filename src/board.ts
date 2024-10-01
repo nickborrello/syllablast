@@ -1,17 +1,16 @@
-import { parse } from "path";
 import { Coordinate } from "./coordinate";
 
 class Board {
-  private syllables: string[][];
+  public syllables: string[][];
   public finalSyllables: string[][];
 
-  constructor(syllables: string[][], finalSyllables: string[]) {
-    this.syllables = syllables;
+  constructor(initial: string[][], finalSyllables: string[]) {
+    this.syllables = JSON.parse(JSON.stringify(initial)); // Deep copy
     this.finalSyllables = this.parseWords(finalSyllables);
   }
 
   hasWon(): boolean {
-    return this.score() == this.finalSyllables.length;
+    return this.score() == 16;
   }
 
   score(): number {
@@ -28,39 +27,42 @@ class Board {
     return score;
   }
 
+  swapSyllables(coordinate1: Coordinate, coordinate2: Coordinate) {
+    let temp = this.syllables[coordinate1.row][coordinate1.column];
+    this.syllables[coordinate1.row][coordinate1.column] =
+      this.syllables[coordinate2.row][coordinate2.column];
+    this.syllables[coordinate2.row][coordinate2.column] = temp;
+  }
+
   // Validates whether the row of the given coordinate forms a complete word from the solution
   isValid(coordinate: Coordinate): boolean {
     // Retrieve the row of syllables where the coordinate is located
     const rowSyllables = this.syllables[coordinate.row].map(
       (syllable) => syllable
     );
-
-    console.log(rowSyllables);
-
     // for each syllable in the row
-    let currentRow = 0;
+    let currentRow = null;
     for (let i = 0; i <= coordinate.column; i++) {
-      // first syllable
       if (i == 0) {
-        // check for the first syllable in the finalSyllables
-        for (let j = 0; j < this.finalSyllables.length; j++) {
-          // if the syllable is found, set the currentRow to the index of the syllable
-          if (rowSyllables[i] == this.finalSyllables[j][0]) {
+        // Check if the first syllable is the first column of finalSyllables
+        for (let j = 0; j <= 3; j++) {
+          if (rowSyllables[0] == this.finalSyllables[j][0]) {
             currentRow = j;
             break;
-          } else {
-            continue;
           }
         }
-      } else {
-        // check for the next syllables in the finalSyllables
-        if (rowSyllables[i] == this.finalSyllables[currentRow][i]) {
-          continue;
-        } else {
-          console.log(
-            rowSyllables[i] + " =/= " + this.finalSyllables[currentRow][i]
-          );
+        if (currentRow == null) {
           return false;
+        }
+      }
+      // Any other row
+      else {
+        if (currentRow != null) {
+          if (rowSyllables[i] == this.finalSyllables[currentRow][i]) {
+            continue;
+          } else {
+            return false;
+          }
         }
       }
     }

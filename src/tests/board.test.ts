@@ -1,6 +1,6 @@
 import { Coordinate } from "../coordinate";
 import { Board } from "../board";
-import { config1, config2, config3 } from "../puzzles";
+import { config1, config2 } from "../puzzles";
 import { test, expect } from "vitest";
 
 test("isValid returns true if the syllable is in a valid position", () => {
@@ -81,5 +81,20 @@ test("hasWon returns true if the score is 16", () => {
     ],
     config1.words
   );
-  expect(board.hasWon()).toBe(false);
+  expect(board.hasWon()).toBe(true);
+});
+
+test("swapSyllables results in two syllables being swapped", () => {
+  const board = new Board(
+    [
+      ["im", "mac", "u", "late"],
+      ["af", "fil", "i", "ate"],
+      ["un", "der", "wa", "ter"],
+      ["in", "vis", "i", "ble"],
+    ],
+    config1.words
+  );
+  board.swapSyllables(new Coordinate(0, 2), new Coordinate(0, 3));
+  expect(board.syllables[0][2]).toBe("late");
+  expect(board.syllables[0][3]).toBe("u");
 });

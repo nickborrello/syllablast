@@ -4,12 +4,12 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #2f2f2f;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #2f2f2f;
     --foreground: #ededed;
   }
 }
@@ -24,4 +24,75 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.board {
+  width: 830px;
+  height: 430px;
+  border-radius: 25px;
+}
+
+.configGroup {
+  width: 400px;
+}
+
+.configButton {
+  background-color: #1f1f1f;
+  border-radius: 25px;
+  width: 100px;
+  height: 50px;
+}
+
+.controlButton {
+  background-color: #1f1f1f;
+  border-radius: 25px;
+  width: 150px;
+  height: 50px;
+}
+
+.controlButton:disabled {
+  opacity: 0.5; /* Faded appearance */
+}
+
+.controlsGroup {
+  width: 550px;
+}
+
+.syllable {
+  width: 200px;
+  height: 100px;
+  background-color: #1f1f1f;
+  border-radius: 25px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  font-size: 34px;
+  cursor: pointer;
+}
+
+.congratulations-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.congratulations-message {
+  background: #1f1f1f;
+  padding: 2rem;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.congratulations-message h2 {
+  margin-bottom: 1rem;
+}
+
+.congratulations-message p {
+  margin-bottom: 2rem;
 }
