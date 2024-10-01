@@ -34,17 +34,13 @@ class Board {
     this.syllables[coordinate2.row][coordinate2.column] = temp;
   }
 
-  // Validates whether the row of the given coordinate forms a complete word from the solution
   isValid(coordinate: Coordinate): boolean {
-    // Retrieve the row of syllables where the coordinate is located
     const rowSyllables = this.syllables[coordinate.row].map(
       (syllable) => syllable
     );
-    // for each syllable in the row
     let currentRow = null;
     for (let i = 0; i <= coordinate.column; i++) {
       if (i == 0) {
-        // Check if the first syllable is the first column of finalSyllables
         for (let j = 0; j <= 3; j++) {
           if (rowSyllables[0] == this.finalSyllables[j][0]) {
             currentRow = j;

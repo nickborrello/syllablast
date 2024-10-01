@@ -18,7 +18,7 @@ export default function Home() {
   // Function to handle selecting/deselecting a syllable
   function selectSyllable(coord: Coordinate) {
     // Check if the clicked syllable is already selected
-    let selectedSyllables = model.selectedSyllables;
+    const selectedSyllables = model.selectedSyllables;
     const index = selectedSyllables.findIndex(
       (syllable) =>
         syllable.row === coord.row && syllable.column === coord.column
@@ -58,7 +58,7 @@ export default function Home() {
 
   // Handle swapping syllables
   function handleSwap() {
-    let selectedSyllables = model.selectedSyllables;
+    const selectedSyllables = model.selectedSyllables;
     if (selectedSyllables.length === 2) {
       model.swapSyllables(selectedSyllables[0], selectedSyllables[1]);
       model.setSelectedSyllables([]); // Clear selection after swap
@@ -163,7 +163,7 @@ export default function Home() {
         <div className="congratulations-popup">
           <div className="congratulations-message">
             <h2>Congratulations!</h2>
-            <p>You've completed the puzzle!</p>
+            <p>You&apos;ve completed the puzzle!</p>
             <button onClick={handleReset}>Play Again</button>
           </div>
         </div>
